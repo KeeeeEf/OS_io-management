@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { LineChart } from './LineChart';
 
 export const Scheduling = () => {
   const navigate = useNavigate();
@@ -8,6 +9,8 @@ export const Scheduling = () => {
 
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('');
   const [curTrack, setCurTrack] = useState('');
+  const [schedulingData, setSchedulingData] = useState([]);
+
 //   const [tableData, setTableData] = useState([]);
 //   const [replacedData, setReplacedData] = useState([]);
 //   const [pageFaults, setPageFaults] = useState(0);
@@ -17,18 +20,13 @@ export const Scheduling = () => {
     const selectedAlgo = sessionStorage.getItem('selectedAlgorithm');
 
     import(/* @vite-ignore */ `./algos/${selectedAlgo.toLowerCase()}`).then((module) => {
-    //   const { calculateScheduling } = module;
+      const { calculateScheduling } = module;
       const ctrack = parseInt(ct, 10);
-    //   const functionCall = calculateScheduling(trackStream, ctrack);
-
-    //   const resultData = functionCall.frameResults || [];
-    //   const resultReplaced = functionCall.replacedPages || [];
-    //   const { pageFaults, pageHits } = functionCall;
+      const functionCall = calculateScheduling(trackStream, ctrack);
 
       setSelectedAlgorithm(selectedAlgo);
       setCurTrack(ctrack);
-    //   setTableData(resultData);
-    //   setReplacedData(resultReplaced);
+      setSchedulingData(functionCall);
     });
   }, [trackStream, ct]);
 
@@ -67,16 +65,11 @@ export const Scheduling = () => {
         </div>
       </div>
     
-      <table className="table mt-4 text-center table-striped">
-        <thead>
-          <tr>
-            <th></th>
-            
-          </tr>
-        </thead>
-      </table>
+      <div className="mt-4 mb-4">
+        <LineChart data={schedulingData}/>
+      </div>  
 
-      <div className="text-center">
+      <div className="text-center mt-3">
         <button
           onClick={handleSimulateAgain}
           className="btn btn-danger btn-lg"
