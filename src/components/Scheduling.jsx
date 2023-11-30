@@ -10,11 +10,7 @@ export const Scheduling = () => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('');
   const [curTrack, setCurTrack] = useState('');
   const [schedulingData, setSchedulingData] = useState([]);
-
-//   const [tableData, setTableData] = useState([]);
-//   const [replacedData, setReplacedData] = useState([]);
-//   const [pageFaults, setPageFaults] = useState(0);
-//   const [pageHits, setPageHits] = useState(0);
+  const [totalSeekTime, setTotalSeekTime] = useState('');
 
   useEffect(() => {
     const selectedAlgo = sessionStorage.getItem('selectedAlgorithm');
@@ -22,13 +18,21 @@ export const Scheduling = () => {
     import(/* @vite-ignore */ `./algos/${selectedAlgo.toLowerCase()}`).then((module) => {
       const { calculateScheduling } = module;
       const ctrack = parseInt(ct, 10);
+      
       const functionCall = calculateScheduling(trackStream, ctrack);
+      const sched = functionCall.graphResults;
+      const totalstime = functionCall.totalSeekTime;
+
+      console.log("sched: " + sched);
+      console.log("totalstime: " + totalstime);
 
       setSelectedAlgorithm(selectedAlgo);
       setCurTrack(ctrack);
-      setSchedulingData(functionCall);
+
+      setSchedulingData(sched);
+      setTotalSeekTime(totalstime);
     });
-  }, [trackStream, ct]);
+  }, [trackStream, ct, selectedAlgorithm]);
 
   const handleBack = () => {
     navigate('/input');
@@ -52,7 +56,6 @@ export const Scheduling = () => {
       <div className='row mt-3'>
         <div className='col'>
           <h5><b>Current Track:</b> {curTrack}</h5>
-          <h5><b>Total Track Access Requests:</b> {trackStream.length}</h5>
           <h5>
             <b>Stream of Track Access Requests: </b> 
             {trackStream.map((page, pageIndex) => (
@@ -65,8 +68,9 @@ export const Scheduling = () => {
         </div>
       </div>
     
-      <div className="mt-4 mb-4">
+      <div className="mt-2 mb-4 text-center">
         <LineChart data={schedulingData}/>
+        <h4 className="mt-3"><b>Total Seek Time: </b>{totalSeekTime} </h4>
       </div>  
 
       <div className="text-center mt-3">

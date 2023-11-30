@@ -10,7 +10,7 @@ export const LineChart = ({ data }) => {
   return (
     <Chart
       width={'100%'}
-      height={'400px'}
+      height={'380px'}
       chartType="LineChart"
       loader={<div>Loading Chart</div>}
       data={chartData}
