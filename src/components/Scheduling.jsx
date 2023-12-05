@@ -55,7 +55,7 @@ export const Scheduling = () => {
         </div>
       <div className='row mt-3'>
         <div className='col'>
-          <h5><b>Current Track:</b> {curTrack}</h5>
+          <h5><b>Initial Head Position:</b> {curTrack}</h5>
           <h5>
             <b>Stream of Track Access Requests: </b> 
             {trackStream.map((page, pageIndex) => (

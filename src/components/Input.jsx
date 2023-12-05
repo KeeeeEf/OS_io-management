@@ -73,7 +73,7 @@ export const Input = () => {
 
       <div className="mt-5 text-center mx-auto w-25">
         <div className="form-group">
-          <h5><b>Current Track</b></h5>
+          <h5><b>Initial Track</b></h5>
           <h6>(serviced by the read/write head)</h6>
           <input
             type="number"
