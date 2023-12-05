@@ -2,9 +2,9 @@ import React from 'react';
 import Chart from 'react-google-charts';
 
 export const LineChart = ({ data }) => {
-  const chartData = [['Seek Time', 'Track Number']];
+  const chartData = [['Seek Time', 'Track Number', { role: 'annotation' }]];
   data.forEach((number, index) => {
-    chartData.push([index + 1, number]);
+    chartData.push([index, number, number.toString()]);
   });
 
   return (
@@ -19,7 +19,7 @@ export const LineChart = ({ data }) => {
           title: 'Seek Time',
           format: '0',
           gridlines: {
-            count: data.length + 1,
+            count: data.length,
           },
         },
         vAxis: {
@@ -29,7 +29,12 @@ export const LineChart = ({ data }) => {
         series: {
           0: {
             pointShape: 'circle',
-            pointSize: 5, // Set the size of the dots
+            pointSize: 5,
+          },
+        },
+        annotations: {
+          textStyle: {
+            fontSize: 12,
           },
         },
       }}
