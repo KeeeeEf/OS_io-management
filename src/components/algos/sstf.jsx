@@ -10,9 +10,7 @@ function calculateScheduling(trackStream, curTrack) {
         for (let i = 0; i < tracks.length; i++) {
             const distance = Math.abs(tracks[i] - curTrack);
 
-            // Check if the current track is 48
             if (tracks[i] === 48) {
-                // Prioritize track 48
                 return i;
             }
 
